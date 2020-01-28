@@ -19,5 +19,5 @@ scrapyd-deploy
 ## 2.如何直接运行爬虫
 - 在 项目根目录/CodingFirstSpider/ 目录下执行
 ```
-scrapy crawl [爬虫名】
+scrapy crawl [爬虫名]
 ```
