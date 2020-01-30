@@ -2,6 +2,8 @@
 
 /build/
 /dbs/
+/eggs/
+/logs/
 /project.egg-info/
 /CodingFirstSpider/dbs/
 /CodingFirstSpider/eggs/
