@@ -8,6 +8,11 @@
 import scrapy
 
 
-class ProblemItem(scrapy.Item):
-    id = scrapy.Field()
-    title = scrapy.Field()
+# 　爬取题目基础信息类
+class ProblemInfoItem(scrapy.Item):
+    fromWebsite = scrapy.Field()
+    problemUrl = scrapy.Field()
+    problemId = scrapy.Field()
+    problemTitle = scrapy.Field()
+    spiderJob = scrapy.Field()
+    insertTime = scrapy.Field()

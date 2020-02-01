@@ -32,7 +32,8 @@ ROBOTSTXT_OBEY = False
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-# COOKIES_ENABLED = False
+# 禁止cookies,防止被ban
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
@@ -87,3 +88,18 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# Mysql settings
+# Mysql主机地址
+MYSQL_HOST = '127.0.0.1'
+# 连接端口号
+MYSQL_PORT = '3306'
+# Mysql用户名
+MYSQL_USER = 'root'
+# Mysql用户密码
+MYSQL_PASS = 'wyx'
+# Mysql数据库名
+MYSQL_DB = 'cf_spider'
+
+# 日志等级
+LOG_LEVEL = 'INFO'

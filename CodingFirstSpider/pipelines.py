@@ -4,22 +4,65 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-import json
+import copy
+
+import pymysql
+from twisted.enterprise import adbapi
 
 
 class HduPipeline(object):
-    full_json = ''
 
-    def __init__(self):
-        self.filename = open("hdu.json", "wb+")
-        self.filename.write("[".encode("utf-8"))
+    # 采用异步机制写入mysql
+    def __init__(self, dbpool):
+        self.dbpool = dbpool
+
+    # 从配置文件拿配置
+    @classmethod
+    def from_settings(cls, settings):
+        args = dict(
+            host=settings['MYSQL_HOST'],
+            db=settings['MYSQL_DB'],
+            user=settings['MYSQL_USER'],
+            password=settings['MYSQL_PASS'],
+            cursorclass=pymysql.cursors.DictCursor,  # 指定cursor类型
+            charset='utf8',
+            use_unicode=True,
+        )
+        dbpool = adbapi.ConnectionPool('pymysql', **args)
+        return cls(dbpool)
 
     def process_item(self, item, spider):
-        json_text = json.dumps(dict(item), ensure_ascii=False) + ",\n"
-        self.full_json += json_text
-        return item
+        # 爬虫爬取效率较插入快，item变量会被刷新，故使用深复制item来替代原item
+        copy_item = copy.deepcopy(item)
+        # json_text = json.dumps(dict(item), ensure_ascii=False) + ",\n"
+        # self.full_json += json_text
+        query = self.dbpool.runInteraction(self.do_insert, copy_item)
+        query.addErrback(self.handle_error, copy_item, spider)  # 处理异常
+        # return item
+
+    def handle_error(self, failure):
+        # 处理异步插入的异常
+        if failure:
+            print(failure)
+
+    def do_insert(self, cursor, item):
+        # 执行具体的插入
+        # 根据不同的item 构建不同的sql语句并插入到mysql中
+        # insert_sql, params = item.get_insert_sql()
+        # print (insert_sql, params)
+        # cursor.execute(insert_sql, params)
+        insert_sql = """
+            INSERT INTO t_get_problem_info
+            (`from_website`, `problem_url`, `problem_id`, `problem_title`, `spider_job`)
+            VALUES (%s, %s, %s, %s, %s);
+            """
+        # 可以只使用execute，而不需要再使用commit函数
+        cursor.execute(insert_sql,
+                       (item["fromWebsite"],
+                        item["problemUrl"],
+                        item["problemId"],
+                        item["problemTitle"],
+                        item["spiderJob"]))
 
     def close_spider(self, spider):
-        self.filename.write(self.full_json.encode("utf-8"))
-        self.filename.write("]".encode("utf-8"))
-        self.filename.close()
+        pass
