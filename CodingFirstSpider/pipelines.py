@@ -40,29 +40,50 @@ class HduPipeline(object):
         query.addErrback(self.handle_error, copy_item, spider)  # 处理异常
         # return item
 
-    def handle_error(self, failure):
+    @staticmethod
+    def handle_error(failure):
         # 处理异步插入的异常
         if failure:
             print(failure)
 
-    def do_insert(self, cursor, item):
+    @staticmethod
+    def do_insert(cursor, item):
         # 执行具体的插入
         # 根据不同的item 构建不同的sql语句并插入到mysql中
         # insert_sql, params = item.get_insert_sql()
         # print (insert_sql, params)
         # cursor.execute(insert_sql, params)
         insert_sql = """
-            INSERT INTO t_get_problem_info
-            (`from_website`, `problem_url`, `problem_id`, `problem_title`, `spider_job`)
-            VALUES (%s, %s, %s, %s, %s);
+            INSERT INTO `t_get_problem_info`
+            (`spider_job`, 
+            `from_website`, 
+            `problem_url`, 
+            `problem_id`, 
+            `problem_title`, 
+            `problem_time_limit`, 
+            `problem_memory_limit`, 
+            `problem_description`, 
+            `problem_input`, 
+            `problem_output`, 
+            `problem_sample_input`, 
+            `problem_sample_output`) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
         # 可以只使用execute，而不需要再使用commit函数
         cursor.execute(insert_sql,
-                       (item["fromWebsite"],
-                        item["problemUrl"],
-                        item["problemId"],
-                        item["problemTitle"],
-                        item["spiderJob"]))
+                       (item['spider_job'],
+                        item['from_website'],
+                        item['problem_url'],
+                        item['problem_id'],
+                        item['problem_title'],
+                        item['problem_time_limit'],
+                        item['problem_memory_limit'],
+                        item['problem_description'],
+                        item['problem_input'],
+                        item['problem_output'],
+                        item['problem_sample_input'],
+                        item['problem_sample_output']
+                        ))
 
     def close_spider(self, spider):
         pass

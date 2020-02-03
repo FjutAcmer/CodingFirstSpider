@@ -8,11 +8,21 @@
 import scrapy
 
 
-# 　爬取题目基础信息类
+# 　爬取题目信息类
 class ProblemInfoItem(scrapy.Item):
-    fromWebsite = scrapy.Field()
-    problemUrl = scrapy.Field()
-    problemId = scrapy.Field()
-    problemTitle = scrapy.Field()
-    spiderJob = scrapy.Field()
-    insertTime = scrapy.Field()
+    spider_job = scrapy.Field()
+    insert_time = scrapy.Field()
+    from_website = scrapy.Field()
+    problem_url = scrapy.Field()
+    problem_id = scrapy.Field()
+    problem_title = scrapy.Field()
+    problem_time_limit = scrapy.Field()
+    problem_memory_limit = scrapy.Field()
+    problem_description = scrapy.Field()
+    problem_input = scrapy.Field()
+    problem_output = scrapy.Field()
+    problem_sample_input = scrapy.Field()
+    problem_sample_output = scrapy.Field()
+
+
+
