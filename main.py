@@ -8,6 +8,8 @@ import os
 PYTHON_ENV_NAME = "web"
 # 爬虫项目名
 PROJECT_NAME = "CodingFirstSpider"
+# 爬虫名
+SPIDER_NAMES = ['FullHDU']
 
 # 进入项目根目录
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -20,14 +22,20 @@ if deploy_model == "scrapyd":
     spider_name = input("启动爬虫（ [爬虫名] / no）：")
     if spider_name == 'no':
         pass
-    else:
+    elif spider_name in SPIDER_NAMES:
         url = "curl http://localhost:6800/schedule.json -d project={} -d spider={}".format(PROJECT_NAME, spider_name)
         print(url)
         os.system(url)
+    else:
+        print("爬虫不存在，退出")
+        exit(0)
 # 单独使用爬虫
 elif deploy_model == "normal":
     spider_name = input("启动爬虫（ [爬虫名] / no）：")
     if spider_name == 'no':
         pass
-    else:
+    elif spider_name in SPIDER_NAMES:
         cmdline.execute(["scrapy", "crawl", spider_name])
+    else:
+        print("爬虫不存在，退出")
+        exit(0)

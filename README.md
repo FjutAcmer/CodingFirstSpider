@@ -15,42 +15,14 @@
 
 ## 开发教程
 
-1. 下载并安装Idea，配置好开发环境，安装相关的插件
-2. 下载并安装maven (不是必要，如果正确安装Idea会自动配置)
-3. 下载Spring-2.0.0.M5 SpringBoot工具（不是必要）
-4. 下载并安装MySQL 8.0.15和MySQL可视化工具，项目运行时保持MySQL链接正常 （不是必要，将开放远程测试库）
-5. 下载并安装Redis 3.2.100，项目运行时保持Redis Server在本地开启
-6. 在application.yml，application-dev.yml文件中修改相关字段保证本地的配置链接正确
-7. 运行 CodingFirstApplication.java
-8. 在浏览器中输入地址 http://localhost:[配置文件中的端口]/[配置文件中的项目名]/swagger-ui.html
-进入在线接口文档 
-9. 在浏览器中输入地址 http://localhost:[配置文件中的端口]/[配置文件中的项目名]/druid/index.html
-，并输入用户名密码后，进入Druid管理界面
+1. 下载并安装PyCHarm，配置好开发环境，安装相关的插件
+2. 下载并安装MySQL 8.0.15和MySQL可视化工具，项目运行时保持MySQL链接正常
+3. 执行 项目根目录/db 目录下的 init.sql建立数据库
+4. 运行 项目根目录 下的 main.py 并根据提示运行
+
 
 ## 部署教程
- - ###  直接部署
-  在 项目根目录/CodingFirstSpider/ 目录下执行
-  
-   ```
-   scrapy crawl [爬虫名]
-   ```
- 
- - ### 部署到Scrapyd
- 开发环境使用Anaconda3维护对应Python版本，所以需要进入对应的环境，我这里的环境名是【web】
-  ```
-   activate web
-  ```
-
-  在 项目根目录下（scrapy.cfg同级目录）运行scrapyd服务
-   ```
-   scrapyd
-   ```
-
-  在 项目根目录下（scrapy.cfg同级目录）启动scrapyd-client部署爬虫项目
-  > scrapyd-client： https://github.com/scrapy/scrapyd-client
-   ```
-   scrapyd-deploy
-   ```
+将其部署到scrapyd即可
 
 ## 参与贡献
 
