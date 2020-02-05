@@ -5,7 +5,7 @@ import time
 from CodingFirstSpider.items import ProblemInfoItem
 
 
-class HduSpider(scrapy.Spider):
+class FullHduSpider(scrapy.Spider):
     name = 'FullHDU'
     allowed_domains = ['acm.hdu.edu.cn']
     # 请求延迟
@@ -18,13 +18,14 @@ class HduSpider(scrapy.Spider):
     # def parse(self, response):
     #   pass
 
+    # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
-        # 首先拿到可用页码
         real_pages = response.xpath('//p[@class="footer_link"]/font/a/text()').extract()
         for page in real_pages:
             url = self.base_url % page
             yield scrapy.Request(url, callback=self.parse_problem_id)
 
+    # 从可用页码中爬取题目ID
     def parse_problem_id(self, response):
         problem_list = response.xpath('//script/text()').extract()
         problems = str.split(problem_list[1], ";")
@@ -37,6 +38,7 @@ class HduSpider(scrapy.Spider):
             url = self.problem_detail_url % problem_id
             yield scrapy.Request(url, callback=self.parse_problem_detail)
 
+    # 进入题目详情页爬取题目详细内容
     def parse_problem_detail(self, response):
         hdu = ProblemInfoItem()
         hdu['spider_job'] = ""
