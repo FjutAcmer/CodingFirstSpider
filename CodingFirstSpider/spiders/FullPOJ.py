@@ -15,8 +15,7 @@ class FullPOJSpider(scrapy.Spider):
 
     # # 测试输出
     # def parse(self, response):
-    #     url = 'http://poj.openjudge.cn/practice/1001'
-    #     yield scrapy.Request(url, callback=self.parse_problem_detail)
+    #     pass
 
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
@@ -55,5 +54,4 @@ class FullPOJSpider(scrapy.Spider):
         poj['problem_output'] = des_dict.get('输出')
         poj['problem_sample_input'] = des_dict.get('样例输入')
         poj['problem_sample_output'] = des_dict.get('样例输出')
-        # print(poj)
         yield poj
