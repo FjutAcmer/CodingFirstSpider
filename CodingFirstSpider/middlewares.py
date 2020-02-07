@@ -4,8 +4,44 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import random
+import time
 
 from scrapy import signals
+
+
+# 初始化随机延迟
+class RandomDelayMiddleware(object):
+    def __init__(self, delay):
+        self.delay = delay
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        delay = crawler.spider.settings.get("RANDOM_DELAY")
+        if not isinstance(delay, float):
+            raise ValueError("RANDOM_DELAY need a float")
+        return cls(delay)
+
+    def process_request(self, request, spider):
+        delay = random.uniform(0, self.delay)
+        time.sleep(delay)
+
+
+class ProxyMiddleware(object):
+    def __init__(self, ip):
+        self.ip = ip
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(ip=crawler.settings.get('IP_POOL'))
+
+    def process_request(self, request, spider):
+        try:
+            ip = random.choice(self.ip)
+            print("ip at :" + ip)
+            request.meta['proxy'] = ip
+        except:
+            pass
 
 
 class CodingfirstspiderSpiderMiddleware(object):

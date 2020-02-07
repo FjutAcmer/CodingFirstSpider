@@ -10,7 +10,7 @@ import pymysql
 from twisted.enterprise import adbapi
 
 
-class HduPipeline(object):
+class Pipeline(object):
 
     # 采用异步机制写入mysql
     def __init__(self, dbpool):

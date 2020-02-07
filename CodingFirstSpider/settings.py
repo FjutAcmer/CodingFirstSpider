@@ -52,9 +52,11 @@ COOKIES_ENABLED = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'CodingFirstSpider.middlewares.CodingfirstspiderDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+    'CodingFirstSpider.middlewares.CodingfirstspiderDownloaderMiddleware': 543,
+    'CodingFirstSpider.middlewares.RandomDelayMiddleware': 543,
+    'CodingFirstSpider.middlewares.ProxyMiddleware': 543
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -65,7 +67,7 @@ COOKIES_ENABLED = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'CodingFirstSpider.pipelines.HduPipeline': 300,
+    'CodingFirstSpider.pipelines.Pipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -103,3 +105,14 @@ MYSQL_DB = 'cf_spider'
 
 # 日志等级
 LOG_LEVEL = 'INFO'
+
+# 随机下载延时
+RANDOM_DELAY = 0.25
+
+# 代理IP池
+# IP_POOL = [
+#     'http://123.149.137.247:9999',
+#     'http://115.210.182.1:9999',
+#     'http://117.59.217.237:82',
+#     'http://121.10.109.142:80'
+# ]

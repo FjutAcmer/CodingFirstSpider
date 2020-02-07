@@ -5,11 +5,10 @@ import time
 from CodingFirstSpider.items import ProblemInfoItem
 
 
+# 　HDU爬虫
 class FullHduSpider(scrapy.Spider):
     name = 'FullHDU'
     allowed_domains = ['acm.hdu.edu.cn']
-    # 请求延迟
-    # download_delay = 1
     base_url = 'http://acm.hdu.edu.cn/listproblem.php?vol=%s'
     start_urls = ['http://acm.hdu.edu.cn/listproblem.php']
     problem_detail_url = 'http://acm.hdu.edu.cn/showproblem.php?pid=%s'
@@ -50,7 +49,7 @@ class FullHduSpider(scrapy.Spider):
         hdu['problem_title'] = response.xpath('//h1/text()').extract()[0]
         _temp_limit_str = response.xpath("//span/text()").extract()[0]
         hdu['problem_memory_limit'] = str.split(_temp_limit_str, ":")[2].strip(' ')
-        hdu['problem_time_limit'] = _temp_limit_str[0: str.find(_temp_limit_str, "    Memory Limit")]
+        hdu['problem_time_limit'] = _temp_limit_str[11: str.find(_temp_limit_str, "    Memory Limit")]
         _temp_des_title_str = response.xpath("//div[@class='panel_title']/text()").extract()
         _temp_des_info_str = response.xpath("//div[@class='panel_content']").extract()
         des_dict = dict(zip(_temp_des_title_str, _temp_des_info_str))
@@ -59,5 +58,4 @@ class FullHduSpider(scrapy.Spider):
         hdu['problem_output'] = des_dict.get('Output')
         hdu['problem_sample_input'] = des_dict.get('Sample Input')
         hdu['problem_sample_output'] = des_dict.get('Sample Output')
-        # print(hdu)
         yield hdu
