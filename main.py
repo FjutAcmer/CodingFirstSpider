@@ -9,7 +9,7 @@ PYTHON_ENV_NAME = "web"
 # 爬虫项目名
 PROJECT_NAME = "CodingFirstSpider"
 # 爬虫名
-SPIDER_NAMES = ['FullHDU', 'FullPOJ']
+SPIDER_NAMES = ['FullHDU', 'FullPOJ1', 'FullPOJ2']
 
 # 进入项目根目录
 os.chdir(os.path.dirname(os.path.abspath(__file__)))

@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import re
 import time
 from CodingFirstSpider.items import ProblemInfoItem
 
 
 # 　HDU爬虫
-class FullPOJSpider(scrapy.Spider):
-    name = 'FullPOJ'
-    allowed_domains = ['poj.openjudge.cn']
-    base_url = 'http://poj.openjudge.cn/practice/?page=%s'
-    start_urls = ['http://poj.openjudge.cn/practice/']
-    problem_detail_url = 'http://poj.openjudge.cn/practice/%s'
+class FullPOJTwoSpider(scrapy.Spider):
+    name = "FullPOJ2"
+    allowed_domains = ["poj.openjudge.cn"]
+    # 基本页码url
+    base_url = "http://poj.openjudge.cn/practice/?page=%s"
+    # 爬虫开始url
+    start_urls = ["http://poj.openjudge.cn/practice/"]
+    # 题目详情url
+    problem_detail_url = "http://poj.openjudge.cn/practice/%s"
 
     # # 测试输出
     # def parse(self, response):
@@ -36,7 +38,7 @@ class FullPOJSpider(scrapy.Spider):
     # 进入题目详情页爬取题目详细内容
     def parse_problem_detail(self, response):
         poj = ProblemInfoItem()
-        poj['spider_job'] = ""
+        poj['spider_job'] = "FullPOJ2"
         poj['insert_time'] = time.time()
         poj['from_website'] = self.allowed_domains[0]
         pid = str.split(response.request.url, "/")[-1]

@@ -7,11 +7,11 @@ from CodingFirstSpider.items import ProblemInfoItem
 
 # 　HDU爬虫
 class FullHduSpider(scrapy.Spider):
-    name = 'FullHDU'
-    allowed_domains = ['acm.hdu.edu.cn']
-    base_url = 'http://acm.hdu.edu.cn/listproblem.php?vol=%s'
-    start_urls = ['http://acm.hdu.edu.cn/listproblem.php']
-    problem_detail_url = 'http://acm.hdu.edu.cn/showproblem.php?pid=%s'
+    name = "FullHDU"
+    allowed_domains = ["acm.hdu.edu.cn"]
+    base_url = "http://acm.hdu.edu.cn/listproblem.php?vol=%s"
+    start_urls = ["http://acm.hdu.edu.cn/listproblem.php"]
+    problem_detail_url = "http://acm.hdu.edu.cn/showproblem.php?pid=%s"
 
     # # 测试输出
     # def parse(self, response):
@@ -40,7 +40,7 @@ class FullHduSpider(scrapy.Spider):
     # 进入题目详情页爬取题目详细内容
     def parse_problem_detail(self, response):
         hdu = ProblemInfoItem()
-        hdu['spider_job'] = ""
+        hdu['spider_job'] = "FullHDU"
         hdu['insert_time'] = time.time()
         hdu['from_website'] = self.allowed_domains[0]
         pid = str.split(response.request.url, "=")[1]
