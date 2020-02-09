@@ -21,12 +21,16 @@ class FullPOJTwoSpider(scrapy.Spider):
 
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
-        # POJ只能拿到除当前页码外的其他页码
-        real_pages = response.xpath("//span[@class='pages']/a/text()").extract()
-        # 特例化，从1开始到最大的页码
-        for page in range(1, int(max(real_pages)) + 1):
-            url = self.base_url % page
-            yield scrapy.Request(url, callback=self.parse_problem_id)
+        _html_status = response.status
+        if _html_status == 200:
+            # POJ只能拿到除当前页码外的其他页码
+            real_pages = response.xpath("//span[@class='pages']/a/text()").extract()
+            # 特例化，从1开始到最大的页码
+            for page in range(1, int(max(real_pages)) + 1):
+                url = self.base_url % page
+                yield scrapy.Request(url, callback=self.parse_problem_id)
+        else:
+            return
 
     # 从可用页码中爬取题目ID
     def parse_problem_id(self, response):

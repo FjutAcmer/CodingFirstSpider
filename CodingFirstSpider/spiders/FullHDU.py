@@ -19,10 +19,14 @@ class FullHduSpider(scrapy.Spider):
 
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
-        real_pages = response.xpath('//p[@class="footer_link"]/font/a/text()').extract()
-        for page in real_pages:
-            url = self.base_url % page
-            yield scrapy.Request(url, callback=self.parse_problem_id)
+        _html_status = response.status
+        if _html_status == 200:
+            real_pages = response.xpath('//p[@class="footer_link"]/font/a/text()').extract()
+            for page in real_pages:
+                url = self.base_url % page
+                yield scrapy.Request(url, callback=self.parse_problem_id)
+        else:
+            return
 
     # 从可用页码中爬取题目ID
     def parse_problem_id(self, response):

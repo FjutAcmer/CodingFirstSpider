@@ -25,12 +25,16 @@ class FullPOJOneSpider(scrapy.Spider):
 
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
-        # POJ可以拿到全部有效页码
-        real_pages = response.xpath("//a/font[@size='5']/text()").extract()
-        # 特例化，从1开始到最大的页码
-        for page in real_pages:
-            url = self.base_url % page
-            yield scrapy.Request(url, callback=self.parse_problem_id)
+        _html_status = response.status
+        if _html_status == 200:
+            # POJ可以拿到全部有效页码
+            real_pages = response.xpath("//a/font[@size='5']/text()").extract()
+            # 特例化，从1开始到最大的页码
+            for page in real_pages:
+                url = self.base_url % page
+                yield scrapy.Request(url, callback=self.parse_problem_id)
+        else:
+            return
 
     # 从可用页码中爬取题目ID
     def parse_problem_id(self, response):
