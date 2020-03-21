@@ -15,10 +15,6 @@ class FullPOJTwoSpider(scrapy.Spider):
     # 题目详情url
     problem_detail_url = "http://poj.openjudge.cn/practice/%s"
 
-    # # 测试输出
-    # def parse(self, response):
-    #     pass
-
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
         _html_status = response.status
