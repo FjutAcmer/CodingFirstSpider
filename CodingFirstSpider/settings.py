@@ -101,7 +101,7 @@ MYSQL_USER = 'root'
 # Mysql用户密码
 MYSQL_PASS = 'wyx'
 # Mysql数据库名
-MYSQL_DB = 'cf_spider'
+MYSQL_DB = 'cf_test'
 
 # 日志等级
 LOG_LEVEL = 'INFO'

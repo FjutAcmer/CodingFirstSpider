@@ -54,7 +54,7 @@ class Pipeline(object):
         # print (insert_sql, params)
         # cursor.execute(insert_sql, params)
         insert_sql = """
-            INSERT INTO `t_get_problem_info`
+            INSERT INTO `t_spider_get_problem_info`
             (`spider_job`, 
             `from_website`, 
             `problem_url`, 
