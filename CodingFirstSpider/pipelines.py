@@ -55,7 +55,7 @@ class Pipeline(object):
         # cursor.execute(insert_sql, params)
         insert_sql = """
             INSERT INTO `t_spider_get_problem_info`
-            (`spider_job`, 
+            (`spider_name`, 
             `from_website`, 
             `problem_url`, 
             `problem_id`, 
@@ -71,7 +71,7 @@ class Pipeline(object):
             """
         # 可以只使用execute，而不需要再使用commit函数
         cursor.execute(insert_sql,
-                       (item['spider_job'],
+                       (item['spider_name'],
                         item['from_website'],
                         item['problem_url'],
                         item['problem_id'],

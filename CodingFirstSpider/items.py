@@ -10,7 +10,7 @@ import scrapy
 
 # 　爬取题目信息类
 class ProblemInfoItem(scrapy.Item):
-    spider_job = scrapy.Field()
+    spider_name = scrapy.Field()
     insert_time = scrapy.Field()
     from_website = scrapy.Field()
     problem_url = scrapy.Field()

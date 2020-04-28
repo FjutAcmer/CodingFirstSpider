@@ -58,7 +58,7 @@ class FullUSTCSpider(scrapy.Spider):
         ustc = ProblemInfoItem()
         body = json.loads(response.body)
         problem = body['data']['problem']
-        ustc['spider_job'] = "FullUSTC"
+        ustc['spider_name'] = "FullUSTC"
         ustc['insert_time'] = time.time()
         ustc['from_website'] = self.allowed_domains[0]
         ustc['problem_url'] = self.problem_show_url % problem['problem_id']

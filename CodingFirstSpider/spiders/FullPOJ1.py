@@ -39,7 +39,7 @@ class FullPOJOneSpider(scrapy.Spider):
     # 进入题目详情页爬取题目详细内容
     def parse_problem_detail(self, response):
         poj = ProblemInfoItem()
-        poj['spider_job'] = "FullPOJ1"
+        poj['spider_name'] = "FullPOJ1"
         poj['insert_time'] = time.time()
         poj['from_website'] = self.allowed_domains[0]
         pid = str.split(response.request.url, "=")[-1]

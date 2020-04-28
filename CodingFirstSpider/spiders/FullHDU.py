@@ -40,7 +40,7 @@ class FullHduSpider(scrapy.Spider):
     # 进入题目详情页爬取题目详细内容
     def parse_problem_detail(self, response):
         hdu = ProblemInfoItem()
-        hdu['spider_job'] = "FullHDU"
+        hdu['spider_name'] = "FullHDU"
         hdu['insert_time'] = time.time()
         hdu['from_website'] = self.allowed_domains[0]
         pid = str.split(response.request.url, "=")[1]
