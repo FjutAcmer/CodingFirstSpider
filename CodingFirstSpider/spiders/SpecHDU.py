@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import scrapy
-import re
+
 import time
+import scrapy
+
 from CodingFirstSpider.items import ProblemInfoItem
 
 
