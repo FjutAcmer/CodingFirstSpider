@@ -16,6 +16,11 @@ class FullPOJOneSpider(scrapy.Spider):
     # 题目详情url
     problem_detail_url = "http://poj.org/problem?id=%s"
 
+    # 初始化job标识
+    def __init__(self, job=None, **kwargs):
+        super().__init__(job=None, **kwargs)
+        self.job = job
+
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
         _html_status = response.status
@@ -40,6 +45,7 @@ class FullPOJOneSpider(scrapy.Spider):
     def parse_problem_detail(self, response):
         poj = ProblemInfoItem()
         poj['spider_name'] = "FullPOJ1"
+        poj['spider_job'] = self.job
         poj['insert_time'] = time.time()
         poj['from_website'] = self.allowed_domains[0]
         pid = str.split(response.request.url, "=")[-1]

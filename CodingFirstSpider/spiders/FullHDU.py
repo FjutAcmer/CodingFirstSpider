@@ -13,6 +13,11 @@ class FullHduSpider(scrapy.Spider):
     start_urls = ["http://acm.hdu.edu.cn/listproblem.php"]
     problem_detail_url = "http://acm.hdu.edu.cn/showproblem.php?pid=%s"
 
+    # 初始化job标识
+    def __init__(self, job=None, **kwargs):
+        super().__init__(job=None, **kwargs)
+        self.job = job
+
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
         _html_status = response.status
@@ -41,6 +46,7 @@ class FullHduSpider(scrapy.Spider):
     def parse_problem_detail(self, response):
         hdu = ProblemInfoItem()
         hdu['spider_name'] = "FullHDU"
+        hdu['spider_job'] = self.job
         hdu['insert_time'] = time.time()
         hdu['from_website'] = self.allowed_domains[0]
         pid = str.split(response.request.url, "=")[1]

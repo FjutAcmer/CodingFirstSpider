@@ -20,12 +20,10 @@ class FullUSTCSpider(scrapy.Spider):
     # 题目详情后端url
     problem_detail_url = "https://ustcoj.applinzi.com/api/problem/%s"
 
-    # 测试url
-    # start_urls = [""]
-
-    # 测试输出
-    # def parse(self, response):
-    # pass
+    # 初始化job标识
+    def __init__(self, job=None, **kwargs):
+        super().__init__(job=None, **kwargs)
+        self.job = job
 
     # 爬虫入口函数。首先拿到可用页码
     def parse(self, response):
@@ -59,6 +57,7 @@ class FullUSTCSpider(scrapy.Spider):
         body = json.loads(response.body)
         problem = body['data']['problem']
         ustc['spider_name'] = "FullUSTC"
+        ustc['spider_job'] = self.job
         ustc['insert_time'] = time.time()
         ustc['from_website'] = self.allowed_domains[0]
         ustc['problem_url'] = self.problem_show_url % problem['problem_id']

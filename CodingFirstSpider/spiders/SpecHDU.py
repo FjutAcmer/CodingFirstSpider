@@ -13,9 +13,10 @@ class SpecHduSpider(scrapy.Spider):
     problem_detail_url = "http://acm.hdu.edu.cn/showproblem.php?pid=%s"
 
     # 爬虫初始化，拿到参数并初始化
-    def __init__(self, problems=None, **kwargs):
-        super().__init__(problems=None, **kwargs)
+    def __init__(self, problems=None, job=None, **kwargs):
+        super().__init__(problems=None, job=None, **kwargs)
         self.needToGetProblems = problems
+        self.job = job
 
     # 爬虫入口函数。首先拿到参数中的题目ID列表
     def parse(self, response):
@@ -31,6 +32,7 @@ class SpecHduSpider(scrapy.Spider):
     def parse_problem_detail(self, response):
         hdu = ProblemInfoItem()
         hdu['spider_name'] = "SpecHDU"
+        hdu['spider_job'] = self.job
         hdu['insert_time'] = time.time()
         hdu['from_website'] = self.allowed_domains[0]
         pid = str.split(response.request.url, "=")[1]
