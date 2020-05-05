@@ -34,11 +34,8 @@ class Pipeline(object):
     def process_item(self, item, spider):
         # 爬虫爬取效率较插入快，item变量会被刷新，故使用深复制item来替代原item
         copy_item = copy.deepcopy(item)
-        # json_text = json.dumps(dict(item), ensure_ascii=False) + ",\n"
-        # self.full_json += json_text
         query = self.dbpool.runInteraction(self.do_insert, copy_item)
         query.addErrback(self.handle_error, copy_item, spider)  # 处理异常
-        # return item
 
     @staticmethod
     def handle_error(failure):
@@ -49,10 +46,6 @@ class Pipeline(object):
     @staticmethod
     def do_insert(cursor, item):
         # 执行具体的插入
-        # 根据不同的item 构建不同的sql语句并插入到mysql中
-        # insert_sql, params = item.get_insert_sql()
-        # print (insert_sql, params)
-        # cursor.execute(insert_sql, params)
         insert_sql = """
             INSERT INTO `t_spider_get_problem_info`
             (`spider_name`, 
