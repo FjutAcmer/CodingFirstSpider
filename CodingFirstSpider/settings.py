@@ -33,10 +33,10 @@ ROBOTSTXT_OBEY = False
 
 # Disable cookies (enabled by default)
 # 禁止cookies,防止被ban
-COOKIES_ENABLED = True
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
-# TELNETCONSOLE_ENABLED = False
+TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 # DEFAULT_REQUEST_HEADERS = {
@@ -95,7 +95,7 @@ ITEM_PIPELINES = {
 # Mysql主机地址
 MYSQL_HOST = '127.0.0.1'
 # 连接端口号
-MYSQL_PORT = '3306'
+MYSQL_PORT = 3306
 # Mysql用户名
 MYSQL_USER = 'root'
 # Mysql用户密码

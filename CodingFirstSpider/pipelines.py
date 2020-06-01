@@ -5,8 +5,10 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import copy
+import logging
 
 import pymysql
+
 from twisted.enterprise import adbapi
 
 
@@ -21,6 +23,7 @@ class Pipeline(object):
     def from_settings(cls, settings):
         args = dict(
             host=settings['MYSQL_HOST'],
+            port=settings['MYSQL_PORT'],
             db=settings['MYSQL_DB'],
             user=settings['MYSQL_USER'],
             password=settings['MYSQL_PASS'],
@@ -35,13 +38,13 @@ class Pipeline(object):
         # 爬虫爬取效率较插入快，item变量会被刷新，故使用深复制item来替代原item
         copy_item = copy.deepcopy(item)
         query = self.dbpool.runInteraction(self.do_insert, copy_item)
-        query.addErrback(self.handle_error, copy_item, spider)  # 处理异常
+        query.addErrback(self.handle_error)  # 处理异常
 
     @staticmethod
     def handle_error(failure):
         # 处理异步插入的异常
         if failure:
-            print(failure)
+            logging.error(failure)
 
     @staticmethod
     def do_insert(cursor, item):

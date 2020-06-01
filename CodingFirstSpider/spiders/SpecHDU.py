@@ -23,7 +23,6 @@ class SpecHduSpider(scrapy.Spider):
         _html_status = response.status
         problems = str.split(self.needToGetProblems, ",")
         if _html_status == 200:
-            print('problems:', problems)
             for item in problems:
                 url = self.problem_detail_url % item
                 yield scrapy.Request(url, callback=self.parse_problem_detail)
