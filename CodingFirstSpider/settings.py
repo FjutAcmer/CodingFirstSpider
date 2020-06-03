@@ -111,8 +111,6 @@ RANDOM_DELAY = 0.25
 
 # 代理IP池
 # IP_POOL = [
-#     'http://123.149.137.247:9999',
-#     'http://115.210.182.1:9999',
-#     'http://117.59.217.237:82',
-#     'http://121.10.109.142:80'
+#     'http://xxx.xxx.xxx.xxx:xxx',
+#     'http://xxx.xxx.xxx.xxx:xxx'
 # ]
